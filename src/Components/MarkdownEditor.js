@@ -14,7 +14,7 @@ import { textDataActions } from "../Store/textdata-slice";
 const MarkdownEditor = () => {
   const dispatch = useDispatch();
 
-  const textData = useSelector((state) => state.textData.text);
+  const textData = useSelector((state) => state.textData.present);
   const toggleNavbar = useSelector((state) => state.navbar.toggleNavbar);
   const toggleSidebar = useSelector((state) => {
     return state.sidebar.toggleSidebar;

@@ -18,10 +18,14 @@ import classes from "./Header.module.css";
 import { VscListOrdered } from "react-icons/vsc";
 import { BsCardChecklist, BsCode } from "react-icons/bs";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { textDataActions } from "../Store/textdata-slice";
 
 const Header = () => {
+  const dispatch = useDispatch();
+
   const toggleNavbar = useSelector((state) => state.navbar.toggleNavbar);
-  const textData = useSelector((state) => state.textData.text);
+  const textData = useSelector((state) => state.textData.present);
 
   const fileDownloadHandler = () => {
     const element = document.createElement("a");
@@ -32,6 +36,29 @@ const Header = () => {
     element.click();
   };
 
+  const undoTextHandler = () => {
+    dispatch(textDataActions.undoText());
+    console.log(textData);
+  };
+  const redoTextHandler = () => {
+    dispatch(textDataActions.RedoText());
+  };
+  const boldTextHandler = () => {
+    dispatch(textDataActions.boldText());
+  };
+  const italicTextHandler = () => {
+    dispatch(textDataActions.italicText());
+  };
+  const headingTextHandler = () => {
+    dispatch(textDataActions.headingText());
+  };
+  const strikeThroughTextHandler = () => {
+    dispatch(textDataActions.strikeThroughText());
+  };
+  const unorderedListHandler = () => {
+    dispatch(textDataActions.unorderedList());
+  };
+
   const headerClasses = `${classes["main-header"]} ${
     !toggleNavbar && classes["main-header-hidden"]
   }`;
@@ -40,13 +67,13 @@ const Header = () => {
     <div className={headerClasses}>
       <div className={classes["main-header__left-container"]}>
         <AiFillFolder />
-        <FaUndoAlt />
-        <AiOutlineRedo />
-        <FaBold />
-        <FaItalic />
-        <span>T</span>
-        <AiOutlineStrikethrough />
-        <AiOutlineUnorderedList />
+        <FaUndoAlt onClick={undoTextHandler} />
+        <AiOutlineRedo onClick={redoTextHandler} />
+        <FaBold onClick={boldTextHandler} />
+        <FaItalic onClick={italicTextHandler} />
+        <span onClick={headingTextHandler}>T</span>
+        <AiOutlineStrikethrough onClick={strikeThroughTextHandler} />
+        <AiOutlineUnorderedList onClick={unorderedListHandler} />
         <VscListOrdered />
         <BsCardChecklist />
         <FaQuoteRight />

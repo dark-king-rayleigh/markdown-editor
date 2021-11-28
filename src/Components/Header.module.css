@@ -1,3 +1,42 @@
+.header-folder {
+  width: 260px;
+  height: 100%;
+  background-color: rgb(231, 231, 231);
+  position: fixed;
+  left: 0;
+  top: 0;
+  color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  flex-direction: column;
+}
+
+.header-folder__hidden {
+  display: none;
+}
+
+.header-folder__icons {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.2rem 0.5rem;
+}
+.icons {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.icons > svg,
+.header-folder__icons > div > svg {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #001730;
+}
+
+.icons > svg:hover,
+.header-folder__icons > div > svg:hover {
+  color: #4ad7d1;
+}
+
 .main-header {
   background-color: #001730;
   display: flex;
@@ -9,6 +48,23 @@
 
 .main-header-hidden {
   display: none;
+}
+
+.header-folder__folders {
+  margin-top: 0.5rem;
+  padding-left: 0.3rem;
+}
+
+.header-folder__folders svg {
+  font-size: 0.5rem;
+}
+.header-folder__folders span {
+  font-size: 1rem;
+}
+.header-folder__folders__welcomefile {
+  font-size: 0.9rem !important;
+  padding-left: 1rem;
+  margin-top: 1.5rem !important;
 }
 
 .main-header__left-container {

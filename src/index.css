@@ -12,7 +12,7 @@ html {
 
 ::-webkit-scrollbar {
   cursor: pointer !important;
-  width: 1rem;
+  width: 0.7rem;
 }
 
 ::-webkit-scrollbar-track {

@@ -83,11 +83,11 @@ section h1 {
 
 @media (min-width: 662px) {
   .input-area {
-    width: 45%;
+    width: 50%;
   }
   .output-area {
     background-color: #bbb;
-    width: 57%;
+    width: 47%;
     height: 100%;
     padding-left: 1rem;
     color: black;

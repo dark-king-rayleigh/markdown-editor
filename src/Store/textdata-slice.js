@@ -37,25 +37,40 @@ const textDataSlice = createSlice({
       }
     },
     boldText(state) {
-      state.present = state.present.concat("**Strong text**" + "\n");
+      state.present = `${state.present} **Strong text**`;
       console.log(state.present);
       console.log(state.future.length);
     },
     italicText(state) {
-      state.present = state.present + "*emphasized text*" + "\n ";
+      state.present = `${state.present} *emphasized text*`;
       console.log(state.present);
       console.log(state.future.length);
     },
     headingText(state) {
-      state.present = state.present + "## Heading" + "\n";
+      state.present = `${state.present} ${"\n"}  ## Heading ${"\n"}`;
     },
     strikeThroughText(state) {
-      state.present = state.present + "~~strikethrough text~~" + "\n";
+      state.present = `${state.present} "~~strikethrough text~~"`;
       console.log(state.present);
     },
     unorderedList(state) {
-      state.present = state.present + "- List item" + "\n";
+      state.present = `${state.present} ${"\n"} - List item`;
       console.log(state.present);
+    },
+
+    orderedList(state) {
+      state.present = `${state.present} \n  ${1}. List item`;
+    },
+
+    addBlockQuote(state) {
+      state.present = `${state.present} ${"\n"}  > Blockquote ${"\n"} `;
+    },
+
+    addListItem(state) {
+      state.present = `${state.present} ${"\n"} - [ ] List item ${"\n"} `;
+    },
+    addTable(state) {
+      state.present = `${state.present} \n |  |  |  \n |--|--| \n |  |  |  \n`;
     },
   },
 });

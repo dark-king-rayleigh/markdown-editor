@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import classes from "./MarkdownEditor.module.css";
 import ReactMarkdown from "react-markdown";
 import { AiOutlineEye } from "react-icons/ai";

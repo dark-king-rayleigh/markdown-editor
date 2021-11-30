@@ -43,6 +43,11 @@ const Header = () => {
     element.click();
   };
 
+  const newFileHandler = () => {
+    dispatch(textDataActions.newFile());
+    setShowSidebar(false);
+  };
+
   const undoTextHandler = () => {
     dispatch(textDataActions.undoText());
     console.log(textData);
@@ -108,7 +113,10 @@ const Header = () => {
           <br />
           <AiOutlineSend /> <span>Temp</span>
           <br />
-          <span className={classes["header-folder__folders__welcomefile"]}>
+          <span
+            className={classes["header-folder__folders__welcomefile"]}
+            onClick={newFileHandler}
+          >
             Welcome File
           </span>
         </div>

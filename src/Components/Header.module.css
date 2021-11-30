@@ -8,6 +8,7 @@
   color: rgba(0, 0, 0, 0.75);
   display: flex;
   flex-direction: column;
+  z-index: 2;
 }
 
 .header-folder__hidden {
@@ -18,6 +19,7 @@
   display: flex;
   justify-content: space-between;
   padding: 0.2rem 0.5rem;
+  background-color: #bbbbbb;
 }
 .icons {
   width: 70%;
@@ -65,6 +67,7 @@
   font-size: 0.9rem !important;
   padding-left: 1rem;
   margin-top: 1.5rem !important;
+  cursor: pointer;
 }
 
 .main-header__left-container {

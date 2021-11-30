@@ -4,6 +4,10 @@ const textDataSlice = createSlice({
   name: "textData",
   initialState: { past: [], present: "", future: [] },
   reducers: {
+    replaceText(state, action) {
+      state.present = action.payload;
+    },
+
     getTextData(state, action) {
       state.past = [...state.past, state.present];
       state.present = action.payload;

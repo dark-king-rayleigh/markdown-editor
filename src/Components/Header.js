@@ -33,6 +33,8 @@ const Header = () => {
 
   const toggleNavbar = useSelector((state) => state.navbar.toggleNavbar);
   const textData = useSelector((state) => state.textData.present);
+  const prev = useSelector((state) => state.textData.past);
+  console.log(prev);
 
   const fileDownloadHandler = () => {
     const element = document.createElement("a");
@@ -41,6 +43,10 @@ const Header = () => {
     element.download = "NewDocument.md";
     document.body.appendChild(element);
     element.click();
+  };
+
+  const inputClearHandler = () => {
+    dispatch(textDataActions.clearArea());
   };
 
   const newFileHandler = () => {
@@ -90,6 +96,8 @@ const Header = () => {
     !showSideBar && classes["header-folder__hidden"]
   }`;
 
+  const undoClasses = `${prev === [] && classes["no-undo"]}`;
+
   return (
     <>
       <div className={headerFooterClasses}>
@@ -128,7 +136,7 @@ const Header = () => {
               setShowSidebar(true);
             }}
           />
-          <FaUndoAlt onClick={undoTextHandler} />
+          <FaUndoAlt onClick={undoTextHandler} className={undoClasses} />
           <AiOutlineRedo onClick={redoTextHandler} />
           <FaBold onClick={boldTextHandler} />
           <FaItalic onClick={italicTextHandler} />
@@ -144,6 +152,9 @@ const Header = () => {
           <AiOutlineFileImage /> */}
         </div>
         <div className={classes["main-header__right-container"]}>
+          <button className={classes.clear} onClick={inputClearHandler}>
+            Clear
+          </button>
           <button onClick={fileDownloadHandler}>download</button>
         </div>
       </div>

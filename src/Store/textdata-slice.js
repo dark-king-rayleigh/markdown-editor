@@ -2,10 +2,23 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const textDataSlice = createSlice({
   name: "textData",
-  initialState: { past: [], present: "", future: [] },
+  initialState: { past: [], present: localStorage.getItem("text"), future: [] },
   reducers: {
+    clearArea(state, action) {
+      state.present = "";
+    },
+
     replaceText(state, action) {
       state.present = action.payload;
+    },
+    newFile(state, action) {
+      state.present = `**Strong text** *emphasized text* \n
+## Heading \n
+- List item \n
+1. List item \n
+- [ ] List item \n
+      
+> Blockquote \n`;
     },
 
     getTextData(state, action) {

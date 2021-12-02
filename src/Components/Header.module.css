@@ -109,3 +109,13 @@
 .main-header__right-container button:hover {
   color: #4ad7d1;
 }
+
+.clear {
+  margin-right: 1rem;
+}
+
+.no-undo path,
+.no-redo {
+  cursor: not-allowed;
+  color: red;
+}

@@ -9,8 +9,6 @@ import {
   AiOutlineRedo,
   AiOutlineStrikethrough,
   AiOutlineUnorderedList,
-  // AiOutlineLink,
-  // AiOutlineFileImage,
 } from "react-icons/ai";
 import {
   FaUndoAlt,
@@ -27,6 +25,8 @@ import { useDispatch } from "react-redux";
 import { textDataActions } from "../Store/textdata-slice";
 
 const Header = () => {
+  const [showNewInput, setShowNewInput] = useState(false);
+  const [isNewInputFocused, setIsNewInputFocused] = useState(true);
   const [showSideBar, setShowSidebar] = useState(false);
 
   const dispatch = useDispatch();
@@ -103,7 +103,12 @@ const Header = () => {
       <div className={headerFooterClasses}>
         <div className={classes["header-folder__icons"]}>
           <div className={classes.icons}>
-            <AiFillFileAdd />
+            <AiFillFileAdd
+              onClick={() => {
+                setShowNewInput(true);
+                setIsNewInputFocused(true);
+              }}
+            />
             <AiFillFolderAdd />
             <AiFillDelete />
             <BsPencilFill />
@@ -112,6 +117,7 @@ const Header = () => {
             <AiFillCloseCircle
               onClick={() => {
                 setShowSidebar(false);
+                setShowNewInput(false);
               }}
             />
           </div>
@@ -125,8 +131,16 @@ const Header = () => {
             className={classes["header-folder__folders__welcomefile"]}
             onClick={newFileHandler}
           >
-            Welcome File
+            welcome file
           </span>
+          {showNewInput && isNewInputFocused && (
+            <input
+              type="text"
+              className={classes["new-input"]}
+              onBlur={() => setIsNewInputFocused(false)}
+              autoFocus
+            />
+          )}
         </div>
       </div>
       <div className={headerClasses}>
@@ -148,8 +162,6 @@ const Header = () => {
           <FaQuoteRight onClick={blockQuoteHandler} />
           <BsCode />
           <FaTable onClick={addTableHandler} />
-          {/* <AiOutlineLink />
-          <AiOutlineFileImage /> */}
         </div>
         <div className={classes["main-header__right-container"]}>
           <button className={classes.clear} onClick={inputClearHandler}>

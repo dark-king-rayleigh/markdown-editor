@@ -10,31 +10,50 @@ import {
   AiOutlineStrikethrough,
   AiOutlineUnorderedList,
 } from "react-icons/ai";
-import {
-  FaUndoAlt,
-  FaBold,
-  FaItalic,
-  FaQuoteRight,
-  FaTable,
-} from "react-icons/fa";
+import { FaUndoAlt, FaBold, FaItalic, FaQuoteRight } from "react-icons/fa";
 import classes from "./Header.module.css";
 import { VscListOrdered } from "react-icons/vsc";
 import { BsCardChecklist, BsCode, BsPencilFill } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { textDataActions } from "../Store/textdata-slice";
+import { newInputActions } from "../Store/newInput-slice";
+import { configActions } from "../Store/config-slice";
 
 const Header = () => {
+  const activeFile = useSelector((state) => state.config.config.active);
   const [showNewInput, setShowNewInput] = useState(false);
   const [isNewInputFocused, setIsNewInputFocused] = useState(true);
   const [showSideBar, setShowSidebar] = useState(false);
-
+  const [fileName, setFileName] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
 
-  const toggleNavbar = useSelector((state) => state.navbar.toggleNavbar);
+  const toggleNavbar = useSelector((state) => state.config.config.toggleNavbar);
   const textData = useSelector((state) => state.textData.present);
   const prev = useSelector((state) => state.textData.past);
-  console.log(prev);
+  const files = useSelector((state) => state.newInput.files);
+
+  // adding new file on blur
+  const newInputBlurHandler = () => {
+    setIsNewInputFocused(false);
+    if (fileName) {
+      dispatch(newInputActions.newFile(fileName));
+      setFileName("");
+    }
+  };
+
+  // editing file name
+  const editinBlurHandler = () => {
+    setIsEditing(false);
+    if (fileName !== activeFile) {
+      dispatch(newInputActions.editFile({ fileName, activeFile }));
+      dispatch(configActions.resetActive());
+    } else {
+      console.log("same file name");
+    }
+    setFileName("");
+  };
 
   const fileDownloadHandler = () => {
     const element = document.createElement("a");
@@ -45,18 +64,16 @@ const Header = () => {
     element.click();
   };
 
+  const setActiveFileHandler = (file) => {
+    dispatch(configActions.setActiveFile(file));
+  };
+
   const inputClearHandler = () => {
     dispatch(textDataActions.clearArea());
   };
 
-  const newFileHandler = () => {
-    dispatch(textDataActions.newFile());
-    setShowSidebar(false);
-  };
-
   const undoTextHandler = () => {
     dispatch(textDataActions.undoText());
-    console.log(textData);
   };
   const redoTextHandler = () => {
     dispatch(textDataActions.RedoText());
@@ -86,9 +103,18 @@ const Header = () => {
   const blockQuoteHandler = () => {
     dispatch(textDataActions.addBlockQuote());
   };
-  const addTableHandler = () => {
-    dispatch(textDataActions.addTable());
+  const deleteFileHandler = () => {
+    dispatch(newInputActions.deleteFile(activeFile));
+    dispatch(configActions.resetActive());
   };
+
+  //while clicking in edit button
+  const editFileNameHandler = () => {
+    setIsNewInputFocused(false);
+    setIsEditing(true);
+    setFileName(activeFile);
+  };
+
   const headerClasses = `${classes["main-header"]} ${
     !toggleNavbar && classes["main-header-hidden"]
   }`;
@@ -97,6 +123,11 @@ const Header = () => {
   }`;
 
   const undoClasses = `${prev === [] && classes["no-undo"]}`;
+
+  //while clicking files in sidebar
+  const fileClickHandler = (file) => {
+    setActiveFileHandler(file);
+  };
 
   return (
     <>
@@ -107,17 +138,19 @@ const Header = () => {
               onClick={() => {
                 setShowNewInput(true);
                 setIsNewInputFocused(true);
+                setIsEditing(false);
+                setFileName("");
               }}
             />
             <AiFillFolderAdd />
-            <AiFillDelete />
-            <BsPencilFill />
+            <AiFillDelete onClick={deleteFileHandler} />
+            <BsPencilFill onClick={editFileNameHandler} />
           </div>
           <div>
             <AiFillCloseCircle
               onClick={() => {
-                setShowSidebar(false);
-                setShowNewInput(false);
+                setShowSidebar();
+                setShowNewInput();
               }}
             />
           </div>
@@ -127,17 +160,40 @@ const Header = () => {
           <br />
           <AiOutlineSend /> <span>Temp</span>
           <br />
-          <span
-            className={classes["header-folder__folders__welcomefile"]}
-            onClick={newFileHandler}
-          >
-            welcome file
-          </span>
+          {files.map((file, index) => {
+            return (
+              <div
+                key={index}
+                className={`${classes["header-folder__files"]} ${
+                  activeFile === file && classes["header-folder__files__active"]
+                }`}
+                onClick={() => fileClickHandler(file)}
+              >
+                {file}
+              </div>
+            );
+          })}
           {showNewInput && isNewInputFocused && (
             <input
               type="text"
+              value={fileName}
               className={classes["new-input"]}
-              onBlur={() => setIsNewInputFocused(false)}
+              onBlur={newInputBlurHandler}
+              onChange={(e) => {
+                setFileName(e.target.value);
+              }}
+              autoFocus
+            />
+          )}
+          {isEditing && (
+            <input
+              type="text"
+              value={fileName}
+              className={classes["new-input"]}
+              onBlur={editinBlurHandler}
+              onChange={(e) => {
+                setFileName(e.target.value);
+              }}
               autoFocus
             />
           )}
@@ -161,7 +217,6 @@ const Header = () => {
           <BsCardChecklist onClick={listItemHandler} />
           <FaQuoteRight onClick={blockQuoteHandler} />
           <BsCode />
-          <FaTable onClick={addTableHandler} />
         </div>
         <div className={classes["main-header__right-container"]}>
           <button className={classes.clear} onClick={inputClearHandler}>
@@ -173,5 +228,4 @@ const Header = () => {
     </>
   );
 };
-
 export default Header;

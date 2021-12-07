@@ -4,22 +4,20 @@ import ReactMarkdown from "react-markdown";
 import { AiOutlineEye } from "react-icons/ai";
 import { BsLayoutSplit, BsPencilFill } from "react-icons/bs";
 import { useSelector, useDispatch } from "react-redux";
-import { navbarActions } from "../Store/navbar-slice";
-import { sidebarActions } from "../Store/sidebar-slice";
 import { VscSplitVertical } from "react-icons/vsc";
-import { readermodeActions } from "../Store/readermode-slice";
 import { textDataActions } from "../Store/textdata-slice";
+import { configActions } from "../Store/config-slice";
 
 const MarkdownEditor = () => {
   const dispatch = useDispatch();
 
   const textData = useSelector((state) => state.textData.present);
-  const toggleNavbar = useSelector((state) => state.navbar.toggleNavbar);
+  const toggleNavbar = useSelector((state) => state.config.config.toggleNavbar);
   const toggleSidebar = useSelector((state) => {
-    return state.sidebar.toggleSidebar;
+    return state.config.config.toggleSidebar;
   });
   const toggleReadermode = useSelector(
-    (state) => state.readermode.toggleReadermode
+    (state) => state.config.config.toggleReadermode
   );
 
   const textChangeHandler = (event) => {
@@ -28,15 +26,15 @@ const MarkdownEditor = () => {
   };
 
   const toggleNavbarHandler = () => {
-    dispatch(navbarActions.toggle());
+    dispatch(configActions.toggleNavBar());
   };
 
   const toggleSidebarHandler = () => {
-    dispatch(sidebarActions.toggle());
+    dispatch(configActions.toggleSideBar());
   };
 
   const toggleReadermodeHandler = () => {
-    dispatch(readermodeActions.toggle());
+    dispatch(configActions.toggleReaderMode());
   };
 
   const outputAreaClasses = `${classes["output-area"]} ${

@@ -63,10 +63,21 @@
 .header-folder__folders span {
   font-size: 1rem;
 }
+
+.header-folder__files {
+  cursor: pointer;
+  position: relative;
+
+  padding: 0.5rem;
+}
+
+.header-folder__files__active {
+  background-color: rgb(156, 147, 147);
+}
+
 .header-folder__folders__welcomefile {
   font-size: 0.9rem !important;
   padding-left: 1rem;
-  margin-top: 1.5rem !important;
   cursor: pointer;
 }
 

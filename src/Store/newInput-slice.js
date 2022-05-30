@@ -41,7 +41,7 @@ const newInputSlice = createSlice({
           state.files.push(newFile);
           localStorage.setItem("files", JSON.stringify(state.files));
           console.log(current(state.files));
-          localStorage.setItem(newFile, "");
+          localStorage.setItem(newFile, "# New File");
         }
       }
     },

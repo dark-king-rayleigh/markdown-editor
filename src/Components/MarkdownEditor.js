@@ -55,7 +55,7 @@ const MarkdownEditor = () => {
         <div className={inputAreaClasses}>
           <textarea
             placeholder="Enter Your Text Here"
-            value={textData}
+            value={textData ? textData : ""}
             onChange={textChangeHandler}
           ></textarea>
         </div>

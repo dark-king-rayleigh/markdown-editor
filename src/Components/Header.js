@@ -142,7 +142,7 @@ const Header = () => {
                 setFileName("");
               }}
             />
-            <AiFillFolderAdd />
+            {/* <AiFillFolderAdd /> */}
             <AiFillDelete onClick={deleteFileHandler} />
             <BsPencilFill onClick={editFileNameHandler} />
           </div>
